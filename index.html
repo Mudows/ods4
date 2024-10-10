@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat ODS 4 - Educação de Qualidade</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>
+        body {
+            background-color: #C5192D; /* Cor da ODS 4 */
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 0 auto;
+        }
+        #chat-window {
+            height: 400px;
+            overflow-y: auto;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .card-panel {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        #send-btn {
+            margin-top: 10px;
+        }
+        @media only screen and (max-width: 600px) {
+            #chat-window {
+                height: 300px;
+            }
+            .container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="red darken-4">
+            <div class="nav-wrapper container">
+                <a href="#" class="brand-logo">ODS 4 Chat</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <ul class="sidenav" id="mobile-demo">
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Contato</a></li>
+        </ul>
+    </header>
+
+    <main class="container">
+        <div class="row">
+            <div class="col s12 m8">
+                <div class="card-panel">
+                    <div id="chat-window"></div>
+                    <div class="input-field">
+                        <input type="text" id="user-input" placeholder="Digite sua mensagem...">
+                        <button class="btn waves-effect waves-light" type="submit" id="send-btn">Enviar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4">
+                <div class="card-panel">
+                    <h5>Curiosidades ODS 4</h5>
+                    <p>A ODS 4 visa garantir educação inclusiva, equitativa e de qualidade para todos até 2030.</p>
+                </div>
+                <div class="card-panel">
+                    <h5>Sobre a ONU</h5>
+                    <p>A ONU estabeleceu 17 Objetivos de Desenvolvimento Sustentável para transformar nosso mundo.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="page-footer red darken-4">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <h5 class="white-text">ODS 4 - Educação de Qualidade</h5>
+                    <p class="grey-text text-lighten-4">Assegurando a educação inclusiva e equitativa de qualidade, e promovendo oportunidades de aprendizagem ao longo da vida para todos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2024 ODS 4 Chat
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            $('.sidenav').sidenav(); // Inicializa o menu lateral para dispositivos móveis
+
+            $('#chat-window').append('<p><strong>Bot:</strong> Olá! Sou o assistente virtual da ODS 4. Como posso ajudar você com informações sobre Educação de Qualidade?</p>');
+
+            $('#send-btn').click(sendMessage);
+            $('#user-input').keypress(function(e) {
+                if(e.which == 13) { // Enter key
+                    sendMessage();
+                }
+            });
+
+            function sendMessage() {
+                var userInput = $('#user-input').val();
+                if (userInput.trim() !== '') {
+                    $('#chat-window').append('<p><strong>Você:</strong> ' + userInput + '</p>');
+                    $('#user-input').val('');
+                    // Aqui você chamaria a função para processar a entrada do usuário e obter a resposta do bot
+                    scrollChatToBottom();
+                }
+            }
+
+            function scrollChatToBottom() {
+                var chatWindow = document.getElementById('chat-window');
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            }
+
+            // Ajusta o tamanho do chat quando a janela é redimensionada
+            $(window).resize(function() {
+                var windowHeight = $(window).height();
+                var chatWindow = $('#chat-window');
+                var otherElementsHeight = $('nav').outerHeight() + $('footer').outerHeight() + 100; // 100px de margem
+                var newChatHeight = windowHeight - otherElementsHeight;
+                chatWindow.height(Math.max(300, newChatHeight)); // Mínimo de 300px
+            }).resize(); // Dispara o evento de resize imediatamente
+        });
+    </script>
+</body>
+</html>
